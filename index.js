@@ -1,10 +1,10 @@
 const express = require('express')
 const app = express();
-const students = require("./routers/students")
+const stores = require("./routers/stores")
 const users = require("./routers/users");
 const checkAuth = require("./middlware");
 const fileUpload = require('express-fileupload');
-const {uploadFile} = require("@uploadcare/upload-client");
+const { uploadFile } = require("@uploadcare/upload-client");
 
 //  require('dotenv');
 
@@ -18,7 +18,7 @@ app.use(fileUpload({
 }));
 
 app.get('/', (req, res) => {
-    res.send('Hello World!')
+    res.send('Hello World mustafa!')
 });
 
 app.post('/upload', function (req, res) {
@@ -30,7 +30,7 @@ app.post('/upload', function (req, res) {
 
 app.post('/v2/upload', async function (req, res) {
     const result = await uploadFile(req.files.file.data, {
-        publicKey:process.env.PUBLICKEY,
+        publicKey: process.env.PUBLICKEY,
         store: 'auto',
         metadata: {
             subsystem: 'uploader',
@@ -40,17 +40,17 @@ app.post('/v2/upload', async function (req, res) {
     res.send(result)
 });
 
-app.use("/api/v1/students", students);
+app.use("/api/v1/stores", stores);
 app.use("/api/v1/users", users);
 
-// app.get('/students', (req, res) => {
-//     let data=getStudent()
+// app.get('/stores', (req, res) => {
+//     let data=getStore()
 //     res.send(data)
 // });
 
-// app.get('/students',
+// app.get('/stores',
 //     async (req, res) => {
-//     await getStudent(req, res)
+//     await getStore(req, res)
 // });
 
 
