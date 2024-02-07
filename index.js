@@ -2,8 +2,8 @@ const express = require('express')
 const app = express();
 const stores = require("./routers/stores")
 const users = require("./routers/users");
-//const Cars = require("./routers/cars");
-//const Booking = require("./routers/Booking");
+const Cars = require("./routers/cars");
+const Booking = require("./routers/Booking");
 const checkAuth = require("./middlware");
 const fileUpload = require('express-fileupload');
 const { uploadFile } = require("@uploadcare/upload-client");
@@ -44,8 +44,8 @@ app.post('/v2/upload', async function (req, res) {
 
 app.use("/api/v1/stores", stores);
 app.use("/api/v1/users", users);
-//app.use("/api/v1/cars", Cars);
-//app.use("/api/v1/Booking", Booking);
+app.use("/api/v1/cars", Cars);
+app.use("/api/v1/Booking", Booking);
 
 // app.get('/stores', (req, res) => {
 //     let data=getStore()
