@@ -38,29 +38,14 @@ async function getusers(req, res) {
     res.send(result.rows);
 }
 
-async function adduser(req, res) {
-    let { username, email, password } = req.body;
-    const hashPassword = bcrypt.hashSync(password, 10);
-    const query = `INSERT INTO users (username, email, pass)
-        VALUES ('${username}', '${email}', '${password}') RETURNING *`;
-    const values = [username, email, hashPassword];
-    const result = await client.query(query, values);
-    res.send({ success: true, user: result.rows[0] });
-}
-
-async function deleteuser(req, res) {
-    const { id } = req.params;
-    const result = await client.query(`DELETE FROM users WHERE id = '${id}' RETURNING *`, [id]);
-    res.send({ success: true, user: result.rows[0] });
-}
 
 async function updateuser(req, res) {
-    const { id } = req.params;
-    let { username, email, password } = req.body;
-    const hashPassword = bcrypt.hashSync(password, 10);
-    const query = (`UPDATE users SET username = '${username}', email = '${email}', pass = '${password}' WHERE id = '${id}' RETURNING *`);
-    const values = [username, email, hashPassword, id];
-    const result = await client.query(query, values);
+    const  id  = req.params.id;
+    let { username, email, pass,name } = req.body;
+    const hashPassword = bcrypt.hashSync(pass, 10);
+    const query = (`UPDATE users SET username = '${username}', email = '${email}', pass = '${hashPassword}',name='${name}' WHERE id = '${id}' RETURNING *`);
+   // const values = [username, email, hashPassword, id];
+    const result = await client.query(query);
     res.send({ success: true, user: result.rows[0] });
 }
 
@@ -68,13 +53,26 @@ module.exports = {
     register,
     login,
     getusers,
-    adduser,
-    deleteuser,
     updateuser,
 };
 
 
 
+// async function adduser(req, res) {
+//     let { username, email, password } = req.body;
+//     const hashPassword = bcrypt.hashSync(password, 10);
+//     const query = `INSERT INTO users (username, email, pass)
+//         VALUES ('${username}', '${email}', '${password}') RETURNING *`;
+//     const values = [username, email, hashPassword];
+//     const result = await client.query(query, values);
+//     res.send({ success: true, user: result.rows[0] });
+// }
+
+// async function deleteuser(req, res) {
+//     const { id } = req.params;
+//     const result = await client.query(`DELETE FROM users WHERE id = '${id}' RETURNING *`, [id]);
+//     res.send({ success: true, user: result.rows[0] });
+// }
 
 //getuser()
 //adduser("mustafa", "7th")

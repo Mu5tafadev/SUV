@@ -44,8 +44,11 @@ app.post('/v2/upload', async function (req, res) {
 
 app.use("/api/v1/stores", stores);
 app.use("/api/v1/users", users);
-app.use("/api/v1/cars", Cars);
+app.use("/api/v1/Cars", Cars);
 app.use("/api/v1/Booking", Booking);
+
+
+
 
 // app.get('/stores', (req, res) => {
 //     let data=getStore()

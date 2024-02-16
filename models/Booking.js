@@ -14,22 +14,23 @@ async function addBooking(req, res) {
     res.send(result.rows);
 }
 
-/////
-
+// /////
 
 async function updateBooking(req, res) {
-    const { id } = req.params; // Assuming id is passed as a parameter in the URL
-    const { car_type, name, phone, status } = req.body;
+    const  id  = req.params.id; // Assuming id is passed as a parameter in the URL
+    const { car_type, name, phone,store_id ,status } = req.body;
     
     // Update the store in the database based on the provided id
     const result = await client.query(` UPDATE Booking SET 
-    car_type = '${car_type}',  name = '${name}',  phone = '${phone}',  status = '${status}'
+    car_type = '${car_type}',  name = '${name}',  phone = '${phone}',store_id='${store_id}' , status = '${status}'
     WHERE id = ${id} RETURNING *`);
     res.send(result.rows);
 }
 
+
+
 async function deleteBooking(req, res) {
-    const { id } = req.params; // Assuming id is passed as a parameter in the URL
+    const  id  = req.params.id; // Assuming id is passed as a parameter in the URL
     
     // Delete the store from the database based on the provided id
     const result = await client.query(` DELETE FROM Booking WHERE id = ${id} RETURNING *`);  

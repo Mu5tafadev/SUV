@@ -8,7 +8,7 @@ async function getStores(req, res) {
 
 
 async function addStores(req, res) {
-    let { description,title,phone,cover ,logo,lat,lang} = req.body;
+    let { description, title, phone, cover, logo, lat, lang } = req.body;
     const result = await client.query(`insert into stores (description,title,phone,cover,logo,lat,lang)
     values ('${description}','${title}','${phone}','${cover}','${logo}','${lat}','${lang}') RETURNING *`);
     res.send(result.rows);
@@ -18,19 +18,20 @@ async function addStores(req, res) {
 
 
 async function updateStores(req, res) {
-    const { id } = req.params; // Assuming id is passed as a parameter in the URL
-    const { description, title, phone, cover ,logo,lat,lang} = req.body;
-    
+    const  id  = req.params.id; // Assuming id is passed as a parameter in the URL
+    const { description, title, phone,address,user_id, cover ,logo,lat,lang} = req.body;
+
     // Update the store in the database based on the provided id
     const result = await client.query(` UPDATE stores SET 
-    description = '${description}',  title = '${title}',  phone = '${phone}',  cover = '${cover}',logo = '${logo}',lat = '${lat}',lang ='${lang}'
+    description = '${description}',  title = '${title}',  phone = '${phone}',address='${address}',user_id='${user_id}' ,
+    cover = '${cover}',logo = '${logo}',lat = '${lat}',lang ='${lang}'
     WHERE id = ${id} RETURNING *`);
     res.send(result.rows);
 }
 
 async function deleteStores(req, res) {
-    const { id } = req.params; // Assuming id is passed as a parameter in the URL
-    
+    const  id  = req.params.id; // Assuming id is passed as a parameter in the URL
+
     // Delete the store from the database based on the provided id
     const result = await client.query(` DELETE FROM stores WHERE id = ${id} RETURNING *`);  
     res.send(result.rows);
@@ -39,9 +40,11 @@ async function deleteStores(req, res) {
 module.exports = {
     getStores,
     addStores,
-   updateStores,
-    deleteStores,
+     updateStores,
+        deleteStores,
 };
+
+
 
 //getStudent()
 //addStudent("mustafa", "7th")

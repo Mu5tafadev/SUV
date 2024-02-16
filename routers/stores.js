@@ -4,7 +4,7 @@ const router = express.Router();
 
 router.get("/", getStores);
 router.post("/", addStores);
-router.post("/", updateStores);
-router.post("/", deleteStores);
+router.put("/update/:id", updateStores);
+router.delete("/delete/:id", deleteStores);
 
 module.exports = router;
