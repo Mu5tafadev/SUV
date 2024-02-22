@@ -39,25 +39,6 @@ async function getusers(req, res) {
 }
 
 
-async function updateuser(req, res) {
-    const  id  = req.params.id;
-    let { username, email, pass,name } = req.body;
-    const hashPassword = bcrypt.hashSync(pass, 10);
-    const query = (`UPDATE users SET username = '${username}', email = '${email}', pass = '${hashPassword}',name='${name}' WHERE id = '${id}' RETURNING *`);
-   // const values = [username, email, hashPassword, id];
-    const result = await client.query(query);
-    res.send({ success: true, user: result.rows[0] });
-}
-
-module.exports = {
-    register,
-    login,
-    getusers,
-    updateuser,
-};
-
-
-
 // async function adduser(req, res) {
 //     let { username, email, password } = req.body;
 //     const hashPassword = bcrypt.hashSync(password, 10);
@@ -68,11 +49,35 @@ module.exports = {
 //     res.send({ success: true, user: result.rows[0] });
 // }
 
-// async function deleteuser(req, res) {
-//     const { id } = req.params;
-//     const result = await client.query(`DELETE FROM users WHERE id = '${id}' RETURNING *`, [id]);
-//     res.send({ success: true, user: result.rows[0] });
-// }
+
+async function updateuser(req, res) {
+    const  id  = req.params.id;
+    let { username, email, pass,name } = req.body;
+    const hashPassword = bcrypt.hashSync(pass, 10);
+    const query = (`UPDATE users SET username = '${username}', email = '${email}', pass = '${hashPassword}',name='${name}' WHERE id = '${id}' RETURNING *`);
+   // const values = [username, email, hashPassword, id];
+    const result = await client.query(query);
+    res.send({ success: true, user: result.rows[0] });
+}
+
+async function deleteuser(req, res) {
+    const id  = req.params.id;
+    const result = await client.query(`DELETE FROM users WHERE id = '${id}' RETURNING *`);
+    res.send( result.rows);
+    
+}
+
+module.exports = {
+    register,
+    login,
+    getusers,
+    updateuser,
+    deleteuser,
+   
+};
+
+
+
 
 //getuser()
 //adduser("mustafa", "7th")

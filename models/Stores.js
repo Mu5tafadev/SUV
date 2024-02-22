@@ -18,8 +18,8 @@ async function addStores(req, res) {
 
 
 async function updateStores(req, res) {
-    const  id  = req.params.id; // Assuming id is passed as a parameter in the URL
-    const { description, title, phone,address,user_id, cover ,logo,lat,lang} = req.body;
+    const id = req.params.id; // Assuming id is passed as a parameter in the URL
+    const { description, title, phone, address, user_id, cover, logo, lat, lang } = req.body;
 
     // Update the store in the database based on the provided id
     const result = await client.query(` UPDATE stores SET 
@@ -30,18 +30,18 @@ async function updateStores(req, res) {
 }
 
 async function deleteStores(req, res) {
-    const  id  = req.params.id; // Assuming id is passed as a parameter in the URL
+    const id = req.params.id; // Assuming id is passed as a parameter in the URL
 
     // Delete the store from the database based on the provided id
-    const result = await client.query(` DELETE FROM stores WHERE id = ${id} RETURNING *`);  
+    const result = await client.query(` DELETE FROM stores WHERE id = ${id} RETURNING *`);
     res.send(result.rows);
 }
 
 module.exports = {
     getStores,
     addStores,
-     updateStores,
-        deleteStores,
+    updateStores,
+    deleteStores,
 };
 
 
